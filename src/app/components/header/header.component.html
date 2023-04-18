@@ -1,0 +1,8 @@
+<mat-toolbar class="header">
+  <span>Prototype</span>
+  <span class="example-spacer"></span>
+  <img (click)="createCall()" *ngIf="isCustomerLogin" class="header-create-call" src="assets/images/icons/phone-outgoing.svg" alt="" width="30" height="30"/>
+  <button mat-icon-button class="example-icon" aria-label="Example icon-button with menu icon" (click)="toogleLeftBar.emit()">
+    <mat-icon>menu</mat-icon>
+  </button>
+</mat-toolbar>

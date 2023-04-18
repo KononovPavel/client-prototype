@@ -1,0 +1,30 @@
+<ng-container *ngIf="!!plan">
+  <mat-card class="example-card">
+    <mat-card-header>
+      <div mat-card-avatar class="example-header-image">
+        <img mat-card-image [src]="plan.images[0]" alt="" />
+      </div>
+      <mat-card-title>{{plan.name}}</mat-card-title>
+      <mat-card-subtitle>Tariff Plan</mat-card-subtitle>
+    </mat-card-header>
+    <img mat-card-image [src]="plan.images[1]" alt="" class="plan-icon"/>
+    <mat-card-content>
+      <div>
+        <ng-container *ngFor="let service of plan.services">
+          <mat-card class="service">
+              <mat-card-header>
+                <div mat-card-avatar class="example-header-image">
+                  <img mat-card-image [src]="service.icon" alt="" width="20" height="20" class="service-icon"/>
+                </div>
+                <mat-card-title class="service-title">{{service.name}}</mat-card-title>
+                <mat-card-subtitle class="service-title">{{service.description}}</mat-card-subtitle>
+              </mat-card-header>
+          </mat-card>
+        </ng-container>
+      </div>
+    </mat-card-content>
+    <mat-card-actions [align]="'end'">
+      <button mat-raised-button color="accent" class="by-plan-button" (click)="_openPlanDetails(plan.planId)" >MORE INFO</button>
+    </mat-card-actions>
+  </mat-card>
+</ng-container>

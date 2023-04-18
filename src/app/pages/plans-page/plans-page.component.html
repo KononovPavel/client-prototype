@@ -1,0 +1,17 @@
+<ng-container *ngIf="!!_planes; else loader">
+  <div class="plans">
+    <mat-card-title class="plans__title">PLANS</mat-card-title>
+    <div class="plans__container">
+      <ng-container *ngFor="let plan of _planes">
+        <app-plan [plan]="plan"></app-plan>
+      </ng-container>
+    </div>
+  </div>
+
+
+
+</ng-container>
+
+<ng-template #loader>
+  <app-loader></app-loader>
+</ng-template>

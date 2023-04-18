@@ -1,0 +1,81 @@
+<ng-container *ngIf="_switchFormsVisible; else login">
+  <div class="login-page">
+    <mat-card>
+      <mat-card-title>
+        <span class="login-page__title">Registration Account</span>
+      </mat-card-title>
+      <form [formGroup]="registrationForm" class="login-page__form">
+        <mat-form-field class="login-page__input"
+                        color="accent"
+                        ngDefaultControl
+                        required
+                        appearance="outline">
+          <mat-label>Email</mat-label>
+          <input  formControlName="email" matInput placeholder="Ex. pat@example.com" required>
+          <mat-error *ngIf="hasError('email', 'required', registrationForm)">Email is required</mat-error>
+          <mat-error *ngIf="hasError('email', 'email', registrationForm)">Invalid email</mat-error>
+        </mat-form-field>
+        <mat-form-field class="login-page__input"
+                        color="accent"
+                        ngDefaultControl
+                        required
+                        appearance="outline">
+          <mat-label>Password</mat-label>
+          <input formControlName="password" type="password" matInput placeholder="Ex. pat@example.com" required>
+          <mat-error *ngIf="hasError('password', 'required', registrationForm)">Password is required</mat-error>
+          <mat-error *ngIf="registrationForm.controls['password'].value.length < 8">Password should be more 8 letters</mat-error>
+        </mat-form-field>
+      </form>
+      <ng-container>
+        <mat-card-subtitle>
+          <span class="login-page__not-account">Have account?</span>
+          <a mat-button color="accent" class="back-link" (click)="_switchFormsVisible = false">SIGN IN</a>
+        </mat-card-subtitle>
+      </ng-container>
+      <mat-card-actions class="login-page__actions">
+        <button mat-raised-button color="accent" class="login-page__btn" (click)="registration()">REGISTRATION ACCOUNT</button>
+      </mat-card-actions>
+    </mat-card>
+  </div>
+</ng-container>
+
+<ng-template #login>
+  <div class="login-page">
+    <mat-card>
+      <mat-card-title>
+        <span class="login-page__title">Sing in system</span>
+      </mat-card-title>
+      <form [formGroup]="loginForm" class="login-page__form">
+        <mat-form-field class="login-page__input"
+                        color="accent"
+                        ngDefaultControl
+                        required
+                        appearance="outline">
+          <mat-label>Email</mat-label>
+          <input formControlName="email" matInput placeholder="Ex. pat@example.com" required>
+          <mat-error *ngIf="hasError('email', 'required', loginForm)">Email is required</mat-error>
+          <mat-error *ngIf="hasError('email', 'email', loginForm)">Invalid email</mat-error>
+        </mat-form-field>
+        <mat-form-field class="login-page__input"
+                        color="accent"
+                        ngDefaultControl
+                        required
+                        appearance="outline">
+          <mat-label>Password</mat-label>
+          <input formControlName="password" type="password" matInput placeholder="Ex. pat@example.com" required>
+          <mat-error *ngIf="hasError('password', 'required', loginForm)">Password is required</mat-error>
+          <mat-error *ngIf="loginForm.controls['password'].value.length < 8">Password should be more 8 letters</mat-error>
+        </mat-form-field>
+      </form>
+      <ng-container>
+        <mat-card-subtitle>
+          <span class="login-page__not-account">Are you haven't account?</span>
+          <a mat-button color="accent" class="login-page__back-link" (click)="_switchFormsVisible = true">GO TO REGISTRATION</a>
+        </mat-card-subtitle>
+      </ng-container>
+      <mat-card-actions class="login-page__actions">
+        <button mat-raised-button color="accent" class="login-page__btn" (click)="signIn()">SIGN IN</button>
+      </mat-card-actions>
+    </mat-card>
+  </div>
+</ng-template>

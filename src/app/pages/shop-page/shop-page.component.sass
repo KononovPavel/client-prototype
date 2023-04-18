@@ -1,0 +1,46 @@
+.shop-container
+  padding: 16px 16px
+  margin: 0 auto
+  @media (max-width: 1200px)
+    padding: 0
+  width: 80%
+
+  &-title
+    margin-top: 16px
+
+  &-list
+    width: 100%
+    margin-top: 16px
+
+    &-products
+      width: 100%
+      display: flex
+      flex-wrap: wrap
+      @media (max-width: 800px)
+        justify-content: center
+
+      &-product
+        display: flex
+        flex-direction: column
+        align-items: center
+        margin: 8px 8px
+        max-width: 200px
+
+        &-image
+          max-height: 200px !important
+
+        &-link
+          white-space: normal
+          line-height: normal
+          margin-top: 4px
+
+        &-price
+          margin-top: 8px !important
+          font-weight: bold
+
+.no-plan
+  width: 100%
+  display: flex
+  align-items: center
+  flex-direction: column
+  margin-top: 20px

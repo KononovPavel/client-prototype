@@ -1,0 +1,60 @@
+<ng-container *ngIf="!!customers && customers.length; else nothingOfCustomers">
+  <h1 mat-dialog-title>Create New Order</h1>
+  <div mat-dialog-content class="create-new-order">
+    <mat-form-field class="create-new-order-field" color="accent" appearance="outline">
+      <mat-label>Customer</mat-label>
+      <input [formControl]="customerControl" required id="customer" type="text" matInput [matAutocomplete]="autoCustomers">
+      <mat-autocomplete #autoCustomers="matAutocomplete" [displayWith]="displayCustomerFn">
+        <mat-option *ngFor="let option of filteredCustomers | async" [value]="option">
+          <ng-container *ngIf="!!option?.customerSensetiveData">
+            {{option?.customerSensetiveData?.firstName}} {{option?.customerSensetiveData?.lastName}}
+          </ng-container>
+          <ng-container *ngIf="!option?.customerSensetiveData">
+            {{option?.email}}
+          </ng-container>
+
+        </mat-option>
+      </mat-autocomplete>
+    </mat-form-field>
+
+      <mat-form-field  class="create-new-order-field" color="accent" appearance="outline">
+        <mat-label>Products</mat-label>
+        <input [formControl]="productControl" id="product" type="text" matInput [matAutocomplete]="autoProducts">
+        <mat-autocomplete #autoProducts="matAutocomplete" [displayWith]="displayProductFn">
+          <mat-option *ngFor="let option of filteredProducts | async" [value]="option">
+            <ng-container *ngIf="!!option?.name">
+              {{option?.name}} {{option?.price}}$
+            </ng-container>
+
+          </mat-option>
+        </mat-autocomplete>
+      </mat-form-field>
+
+      <mat-form-field  class="create-new-order-field" color="accent" appearance="outline">
+        <mat-label>Plans</mat-label>
+        <input [formControl]="planControl" id="plan" type="text" matInput [matAutocomplete]="autoPlans">
+        <mat-autocomplete #autoPlans="matAutocomplete" [displayWith]="displayPlanFn">
+          <mat-option *ngFor="let option of filteredPlans | async" [value]="option">
+            <ng-container *ngIf="!!option?.name">
+              {{option?.name}} {{option?.totalPrice}}$
+            </ng-container>
+
+          </mat-option>
+        </mat-autocomplete>
+      </mat-form-field>
+
+  </div>
+  <div mat-dialog-actions>
+    <button mat-raised-button color="accent" (click)="createNewOrder()">Create</button>
+    <button mat-raised-button color="primary" mat-dialog-close>Cancel</button>
+  </div>
+
+</ng-container>
+
+
+<ng-template #nothingOfCustomers>
+  <mat-card class="no-search">
+    <img src="assets/images/icons/no-customers.svg" width="200" height="200"/>
+    <mat-card-subtitle>Customer Not Found</mat-card-subtitle>
+  </mat-card>
+</ng-template>

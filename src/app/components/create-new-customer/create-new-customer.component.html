@@ -1,0 +1,176 @@
+<ng-container>
+  <h1 mat-dialog-title>Create New Customer</h1>
+  <div mat-dialog-content>
+    <form [formGroup]="customerFormData">
+      <mat-card-subtitle class="create-customer-form-block-title">Email & Password</mat-card-subtitle>
+      <div class="create-customer-form-block">
+        <mat-form-field class="create-customer-form-block-item"
+                        color="accent"
+                        ngDefaultControl
+                        appearance="outline">
+          <mat-label>Email</mat-label>
+          <input formControlName="email" matInput required>
+          <mat-error *ngIf="hasError('email', 'required', customerFormData)">Field is required</mat-error>
+          <mat-error *ngIf="hasError('email', 'email', customerFormData)">Invalid email</mat-error>
+        </mat-form-field>
+        <mat-form-field class="create-customer-form-block-item"
+                        color="accent"
+                        ngDefaultControl
+                        appearance="outline">
+          <mat-label>Password</mat-label>
+          <input formControlName="password" matInput required>
+          <mat-error *ngIf="hasError('password', 'required', customerFormData)">Field is required</mat-error>
+          <mat-error *ngIf="customerFormData.controls['password'].value.length < 8">Password should be more 8 letters
+          </mat-error>
+        </mat-form-field>
+      </div>
+
+      <mat-card-subtitle class="create-customer-form-block-title">Sensetive data</mat-card-subtitle>
+      <div class="create-customer-form-block">
+        <mat-form-field class="create-customer-form-block-item"
+                        color="accent"
+                        ngDefaultControl
+                        appearance="outline">
+          <mat-label>First Name</mat-label>
+          <input formControlName="firstName" matInput required>
+          <mat-error *ngIf="hasError('firstName', 'required', customerFormData)">Field is required
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field class="create-customer-form-block-item"
+                        color="accent"
+                        ngDefaultControl
+                        appearance="outline">
+          <mat-label>Last Name</mat-label>
+          <input formControlName="lastName" matInput required>
+          <mat-error *ngIf="hasError('lastName', 'required', customerFormData)">Field is required
+          </mat-error>
+
+        </mat-form-field>
+        <mat-form-field class="create-customer-form-block-item"
+                        color="accent"
+                        ngDefaultControl
+                        appearance="outline">
+          <mat-label>Patronymic</mat-label>
+          <input formControlName="patronymic" matInput>
+        </mat-form-field>
+      </div>
+
+      <mat-card-subtitle class="create-customer-form-block-title">Address</mat-card-subtitle>
+      <div class="create-customer-form-block">
+        <mat-form-field class="create-customer-form-block-item"
+                        color="accent"
+                        ngDefaultControl
+                        appearance="outline">
+          <mat-label>Country</mat-label>
+          <input formControlName="country" matInput placeholder="Belarus" required>
+          <mat-error *ngIf="hasError('country', 'required', customerFormData)">Field is required</mat-error>
+        </mat-form-field>
+
+        <mat-form-field class="create-customer-form-block-item"
+                        color="accent"
+                        ngDefaultControl
+                        appearance="outline">
+          <mat-label>City</mat-label>
+          <input formControlName="city" matInput required>
+          <mat-error *ngIf="hasError('city', 'required', customerFormData)">Field is required</mat-error>
+
+        </mat-form-field>
+        <mat-form-field class="create-customer-form-block-item"
+                        color="accent"
+                        ngDefaultControl
+                        appearance="outline">
+          <mat-label>Street</mat-label>
+          <input formControlName="home" matInput>
+          <mat-error *ngIf="hasError('home', 'required', customerFormData)">Field is required</mat-error>
+        </mat-form-field>
+
+        <mat-form-field class="create-customer-form-block-item"
+                        color="accent"
+                        ngDefaultControl
+                        appearance="outline">
+          <mat-label>Room</mat-label>
+          <input formControlName="room" matInput>
+          <mat-error *ngIf="hasError('room', 'required', customerFormData)">Field is required</mat-error>
+        </mat-form-field>
+      </div>
+
+      <mat-card-subtitle class="create-customer-form-block-title">Document Info</mat-card-subtitle>
+      <div class="create-customer-form-block">
+        <mat-form-field class="create-customer-form-block-item"
+                        color="accent"
+                        ngDefaultControl
+                        appearance="outline">
+          <mat-label>Document Number</mat-label>
+          <input formControlName="documentNumber" matInput placeholder="AB XXX XX XX" required>
+          <mat-error *ngIf="hasError('documentNumber', 'required', customerFormData)">Field is
+            required
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field class="create-customer-form-block-item"
+                        color="accent"
+                        ngDefaultControl
+                        appearance="outline">
+          <mat-label>Document Code</mat-label>
+          <input formControlName="documentCode" matInput required placeholder="BLR">
+          <mat-error *ngIf="hasError('documentCode', 'required', customerFormData)">Field is
+            required
+          </mat-error>
+
+        </mat-form-field>
+        <mat-form-field class="create-customer-form-block-item"
+                        color="accent"
+                        ngDefaultControl
+                        appearance="outline">
+          <mat-label>Identical Code</mat-label>
+          <input formControlName="identicalCode" matInput required placeholder="XXXXXXX A XXX AA X">
+          <mat-error *ngIf="hasError('identicalCode', 'required', customerFormData)">Field is
+            required
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field class="create-customer-form-block-item"
+                        color="accent"
+                        ngDefaultControl
+                        appearance="outline">
+          <mat-label>Date of create document</mat-label>
+          <input formControlName="dateOfCreateDocument" matInput required [matDatepicker]="picker">
+          <mat-error *ngIf="hasError('dateOfCreateDocument', 'required', customerFormData)">Field
+            is required
+          </mat-error>
+          <mat-hint>DD-MM-YYYY</mat-hint>
+          <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+
+        <mat-form-field class="create-customer-form-block-item"
+                        color="accent"
+                        ngDefaultControl
+                        appearance="outline">
+          <mat-label>Date of expire document</mat-label>
+          <input formControlName="dateOfExpiredDocument" matInput required [matDatepicker]="picker1">
+          <mat-error *ngIf="hasError('dateOfExpiredDocument', 'required', customerFormData)">Field
+            is required
+          </mat-error>
+          <mat-hint>DD-MM-YYYY</mat-hint>
+          <mat-datepicker-toggle matIconSuffix [for]="picker1"></mat-datepicker-toggle>
+          <mat-datepicker #picker1></mat-datepicker>
+        </mat-form-field>
+
+        <label class="input-file">
+          <input type="file" multiple #files placeholder="Upload your files"
+                 (change)="handleFileInputChange($event)">
+          <span class="input-file-btn">Upload document photo</span>
+          <span *ngIf="customerFiles?.length" class="input-file-text">used {{customerFiles?.length}}</span>
+        </label>
+      </div>
+
+    </form>
+  </div>
+  <div mat-dialog-actions>
+    <button mat-raised-button color="accent" (click)="createCustomer()">Create</button>
+    <button mat-raised-button color="primary" mat-dialog-close>Cancel</button>
+  </div>
+</ng-container>
+

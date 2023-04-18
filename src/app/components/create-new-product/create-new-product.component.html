@@ -1,0 +1,65 @@
+<ng-container>
+  <h1 mat-dialog-title>Create New Product</h1>
+  <div mat-dialog-content class="create-product">
+    <form [formGroup]="productFormData">
+      <div class="create-product-form-block">
+
+        <mat-form-field class="create-product-form-block-item" color="accent" appearance="outline">
+          <mat-label>Category</mat-label>
+          <input [formControl]="categoryControl" required id="category" type="text" matInput [matAutocomplete]="autoCategories">
+          <mat-autocomplete #autoCategories="matAutocomplete" [displayWith]="displayCategoryFn">
+            <mat-option *ngFor="let option of filteredCategories | async" [value]="option">
+              <ng-container *ngIf="!!option?.value">
+                {{option?.value}}
+              </ng-container>
+            </mat-option>
+          </mat-autocomplete>
+        </mat-form-field>
+
+        <mat-form-field class="create-product-form-block-item"
+                        color="accent"
+                        ngDefaultControl
+                        appearance="outline">
+          <mat-label>Product Name</mat-label>
+          <input formControlName="name" matInput required>
+          <mat-error *ngIf="hasError('name', 'required', productFormData)">Field is required</mat-error>
+        </mat-form-field>
+        <mat-form-field class="create-product-form-block-item"
+                        color="accent"
+                        ngDefaultControl
+                        appearance="outline">
+          <mat-label>Product Description</mat-label>
+          <input formControlName="description" matInput required>
+          <mat-error *ngIf="hasError('description', 'required', productFormData)">Field is required</mat-error>
+        </mat-form-field>
+
+        <mat-form-field class="create-product-form-block-item"
+                        color="accent"
+                        ngDefaultControl
+                        appearance="outline">
+          <mat-label>Price $</mat-label>
+          <input formControlName="price" matInput required>
+          <mat-error *ngIf="hasError('price', 'required', productFormData)">Field is required</mat-error>
+        </mat-form-field>
+
+        <label class="input-file">
+          <input type="file" multiple #files placeholder="Upload your files"
+                 (change)="handleFileInputChange($event)">
+          <span class="input-file-btn">Upload document photo</span>
+          <span *ngIf="customerFiles?.length" class="input-file-text">used {{customerFiles?.length}}</span>
+        </label>
+      </div>
+
+    </form>
+  </div>
+
+  <div mat-dialog-actions>
+    <button mat-raised-button color="accent" (click)="createNewProduct()">Create</button>
+    <button mat-raised-button color="primary" mat-dialog-close>Cancel</button>
+  </div>
+</ng-container>
+
+
+<ng-container *ngIf="isShowLoader">
+  <app-loader></app-loader>
+</ng-container>

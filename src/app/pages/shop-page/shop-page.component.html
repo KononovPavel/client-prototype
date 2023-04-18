@@ -1,0 +1,43 @@
+<ng-container *ngIf="!!categories">
+  <div class="shop-container">
+    <mat-card-title class="shop-container-title"> Welcome to Shop !</mat-card-title>
+    <mat-tab-group (selectedTabChange)="showProductsBySelectedCategory($event)" color="accent" animationDuration="0ms">
+      <ng-container *ngFor="let category of categories">
+        <mat-tab [label]="category.value">
+            <ng-container *ngIf="!!products && products.length; else nothingOfProducts">
+              <div class="shop-container-list">
+                <div class="shop-container-list-products">
+                  <ng-container *ngFor="let product of products">
+                    <mat-card class="shop-container-list-products-product">
+                      <img class="shop-container-list-products-product-image" [src]="'http://localhost:3000/' + product?.images?.[0]" alt=""/>
+                      <a class="shop-container-list-products-product-link" mat-button color="accent">{{product.name}}</a>
+                      <mat-card-subtitle class="shop-container-list-products-product-price">{{product.price}}$</mat-card-subtitle>
+                      <button mat-raised-button color="accent" (click)="goToProduct(product.productId)">Buy Product</button>
+                    </mat-card>
+                  </ng-container>
+                </div>
+              </div>
+
+
+            </ng-container>
+        </mat-tab>
+      </ng-container>
+    </mat-tab-group>
+  </div>
+
+</ng-container>
+
+
+
+
+<ng-container *ngIf="isShowLoader">
+  <app-loader></app-loader>
+</ng-container>
+
+
+<ng-template #nothingOfProducts>
+  <mat-card class="no-plan">
+    <img src="assets/images/icons/no-products.svg" alt="" width="200px" height="200px"/>
+    <mat-card-subtitle>Sorry, products by category not found</mat-card-subtitle>
+  </mat-card>
+</ng-template>

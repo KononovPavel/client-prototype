@@ -1,0 +1,41 @@
+<ng-container *ngIf="!!_orders?.length; else noItems">
+
+  <div class="order-container">
+    <mat-card-title class="order-container__title">MY ORDERS</mat-card-title>
+    <ng-container *ngFor="let order of _orders">
+      <mat-card class="order-container__order">
+        <div class="order-container__order-status" [class._resolved]="order.status === 'RESOLVED'">
+            {{order.status}}
+        </div>
+        <div class="order-container__order-info">
+          <div class="order-container__order-info-who">
+            <mat-card-subtitle class="order-container__order-info-who-text">When created: {{order.when_created | date}}</mat-card-subtitle>
+            <mat-card-subtitle class="order-container__order-info-who-text">Who accepted: {{order.who_accept ?? '-'}}</mat-card-subtitle>
+          </div>
+          <div class="order-container__order-info-who">
+            <mat-card-subtitle class="order-container__order-info-who-text">Order Number: #{{order.orderNumber}}</mat-card-subtitle>
+            <a mat-button color="accent" [routerLink]="'/dashboard/' + order.linkToCustomer" class="order-container__order-info-who-link">Customer: {{order.linkToCustomer ?? '-'}}</a>
+          </div>
+          <div *ngIf="!!order?.plan">
+            <mat-card-subtitle class="order-container__order-info-who-text">Item: {{order.plan.name}} / {{order.plan.totalPrice}}$</mat-card-subtitle>
+            <a mat-button color="accent" [routerLink]="'/plan/' + order.plan.planId" class="order-container__order-info-who-link">Link: {{order.plan.planId}}</a>
+          </div>
+          <div *ngIf="!!order?.product">
+            <mat-card-subtitle class="order-container__order-info-who-text">Item: {{order.product.name}} / {{order.product.price}}$</mat-card-subtitle>
+            <a mat-button color="accent" [routerLink]="'/product/' + order.product.productId" class="order-container__order-info-who-link">Product: {{order.product.productId}}</a>
+          </div>
+        </div>
+      </mat-card>
+    </ng-container>
+  </div>
+
+</ng-container>
+
+
+<ng-template #noItems>
+  <div class="no-items">
+    <img src="assets/images/icons/not-search.svg" alt="" class="no-items-icon"/>
+    <mat-card-subtitle class="order-container__order-info-who-text">Not founded orders</mat-card-subtitle>
+    <a mat-button color="accent" (click)="backToDashboard()" class="order-container__order-info-who-link">BACK TO DASHBOARD</a>
+  </div>
+</ng-template>

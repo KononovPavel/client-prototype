@@ -1,0 +1,89 @@
+.plan-container
+  padding: 16px 16px
+  margin: 0 auto
+  @media (max-width: 1200px)
+    padding: 0
+  width: 80%
+
+.sensetive-data
+  display: flex
+  flex-wrap: wrap
+
+  &-input
+    margin: 8px
+    max-width: 400px
+    @media (max-width: 600px)
+      max-width: 180px
+
+.mat-card-by-plan
+  margin-top: 10px
+.upload-file
+  display: flex
+  flex-direction: column
+
+.input-file
+  position: relative
+  display: inline-block
+  @media (max-width: 600px)
+    margin-left: 13%
+    margin-bottom: 16px
+
+.input-file-btn
+  position: relative
+  display: inline-block
+  cursor: pointer
+  outline: none
+  text-decoration: none
+  font-size: 14px
+  vertical-align: middle
+  color: rgb(255 255 255)
+  text-align: center
+  border-radius: 4px
+  background-color: #FF0266
+  line-height: 22px
+  padding: 10px 10px
+  box-sizing: border-box
+  border: none
+  margin: 0
+  transition: background-color 0.2s
+
+.input-file-text
+  padding: 0 10px
+  line-height: 40px
+  display: inline-block
+
+.input-file input[type=file]
+  position: absolute
+  z-index: -1
+  opacity: 0
+  display: block
+  width: 0
+  height: 0
+
+
+/* Focus */
+.input-file input[type=file]:focus + .input-file-btn
+  box-shadow: 0 0 0 0.2rem rgba(0,123,255,.25)
+
+
+/* Hover/active */
+.input-file:hover .input-file-btn
+  background-color: #a90441
+
+.input-file:active .input-file-btn
+  background-color: #a90441
+
+
+/* Disabled */
+.input-file input[type=file]:disabled + .input-file-btn
+  background-color: #eee
+
+
+.example-header-image
+  background-size: cover
+
+.customer-image
+  width: 100%
+  height: 100%
+  margin-bottom: 8px
+

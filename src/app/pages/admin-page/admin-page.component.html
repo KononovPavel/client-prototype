@@ -1,0 +1,135 @@
+<ng-container>
+  <div class="admin-container">
+    <mat-tab-group color="accent" class="admin-container-tabs" animationDuration="0ms">
+      <mat-tab label="Customers">
+        <div class="admin-customers">
+          <button class="admin-customers-create" mat-button color="accent" (click)="createNewCustomer()">
+            <img src="assets/images/icons/plus-pink.svg" width="15" height="15"/>
+            Create new Customer
+          </button>
+
+          <ng-container *ngIf="!!customers && customers.length; else noCustomers">
+            <div class="admin-customers-list">
+              <mat-card-title>Customers</mat-card-title>
+              <ng-container *ngFor="let customer of customers">
+                <mat-card class="admin-customers-list-item">
+                  <ng-container *ngIf="customer?.customerSensetiveData">
+                    <mat-card-title>{{customer?.customerSensetiveData?.firstName}} {{customer?.customerSensetiveData?.lastName}}</mat-card-title>
+                  </ng-container>
+                  <ng-container *ngIf="!customer?.customerSensetiveData">
+                    <mat-card-title>{{customer?.email}}</mat-card-title>
+                  </ng-container>
+                  <a mat-button class="admin-customers-list-item-link" color="accent"
+                     [routerLink]="'/dashboard/' + customer?.customerId">Customer Link</a>
+
+                </mat-card>
+              </ng-container>
+            </div>
+
+
+          </ng-container>
+        </div>
+      </mat-tab>
+      <mat-tab label="Orders">
+        <div class="admin-customers">
+          <button class="admin-customers-create" mat-button color="accent" (click)="createNewOrder()">
+            <img src="assets/images/icons/plus-pink.svg" width="15" height="15"/>
+            create new order
+          </button>
+
+          <ng-container *ngIf="!!orders && orders.length; else noOrders">
+            <div class="admin-customers-list">
+              <mat-card-title>Orders</mat-card-title>
+              <ng-container *ngFor="let order of orders">
+                <mat-card class="order-container__order">
+                  <div class="order-container__order-status" [class._resolved]="order.status === 'RESOLVED'">
+                    {{order.status}}
+                  </div>
+                  <div class="order-container__order-info">
+                    <div class="order-container__order-info-who">
+                      <mat-card-subtitle class="order-container__order-info-who-text">When
+                        created: {{order.when_created | date}}</mat-card-subtitle>
+                      <mat-card-subtitle class="order-container__order-info-who-text">Who
+                        accepted: {{order.who_accept ?? '-'}}</mat-card-subtitle>
+                    </div>
+                    <div class="order-container__order-info-who">
+                      <mat-card-subtitle class="order-container__order-info-who-text">Order Number:
+                        #{{order.orderNumber}}</mat-card-subtitle>
+                      <a mat-button color="accent" [routerLink]="'/dashboard/' + order.linkToCustomer"
+                         class="order-container__order-info-who-link">Customer: {{order.linkToCustomer ?? '-'}}</a>
+                    </div>
+                    <div *ngIf="!!order?.plan">
+                      <mat-card-subtitle class="order-container__order-info-who-text">Item: {{order.plan.name}}
+                        / {{order.plan.totalPrice}}$
+                      </mat-card-subtitle>
+                      <a mat-button color="accent" [routerLink]="'/plan/' + order.plan.planId"
+                         class="order-container__order-info-who-link">Link: {{order.plan.planId}}</a>
+                    </div>
+                    <div *ngIf="!!order?.product">
+                      <mat-card-subtitle class="order-container__order-info-who-text">Item: {{order.product.name}}
+                        / {{order.product.price}}$
+                      </mat-card-subtitle>
+                      <a mat-button color="accent" [routerLink]="'/product/' + order.product.productId"
+                         class="order-container__order-info-who-link">Product: {{order.product.productId}}</a>
+                    </div>
+                    <button class="button-accept" mat-raised-button color="accent" (click)="acceptOrder(order.orderId)">
+                      Accept order
+                    </button>
+                  </div>
+                </mat-card>
+              </ng-container>
+            </div>
+          </ng-container>
+        </div>
+      </mat-tab>
+      <mat-tab label="Products">
+        <div class="admin-customers">
+          <button class="admin-customers-create" mat-button color="accent" (click)="createProduct()">
+            <img src="assets/images/icons/plus-pink.svg" width="15" height="15"/>
+            Create new Product
+          </button>
+          <ng-container *ngIf="!!products && products.length; else noProducts">
+            <div class="admin-customers-list">
+              <mat-card-title>Products</mat-card-title>
+              <div class="admin-products-list-products">
+                <ng-container *ngFor="let product of products">
+                  <mat-card class="admin-products-list-products-product">
+                    <img class="admin-products-list-products-product-image" [src]="'http://localhost:3000/' + product?.images?.[0]" alt=""/>
+                    <a class="admin-products-list-products-product-link" mat-button color="accent" [routerLink]="'/product/' + product.productId">{{product.name}}</a>
+                  </mat-card>
+                </ng-container>
+              </div>
+            </div>
+          </ng-container>
+        </div>
+      </mat-tab>
+      <mat-tab label="Plans">Content 3</mat-tab>
+    </mat-tab-group>
+  </div>
+</ng-container>
+
+
+<ng-container *ngIf="isShowLoader">
+  <app-loader></app-loader>
+</ng-container>
+
+<ng-template #noCustomers>
+  <mat-card class="no-search">
+    <img src="assets/images/icons/no-customers.svg" width="200" height="200"/>
+    <mat-card-subtitle>Customer Not Found</mat-card-subtitle>
+  </mat-card>
+</ng-template>
+
+<ng-template #noOrders>
+  <mat-card class="no-search">
+    <img src="assets/images/icons/no-documents.svg" width="200" height="200"/>
+    <mat-card-subtitle>Orders Not Found</mat-card-subtitle>
+  </mat-card>
+</ng-template>
+
+<ng-template #noProducts>
+  <mat-card class="no-search">
+    <img src="assets/images/icons/no-products.svg" width="200" height="200"/>
+    <mat-card-subtitle>Orders Not Found</mat-card-subtitle>
+  </mat-card>
+</ng-template>

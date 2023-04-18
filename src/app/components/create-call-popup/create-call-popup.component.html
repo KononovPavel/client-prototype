@@ -1,0 +1,13 @@
+<ng-container>
+  <h1 mat-dialog-title>Call</h1>
+  <div mat-dialog-content class="create-call-content">
+    <mat-form-field class="chat-container-message-bar-general-input"
+                    color="accent"
+                    ngDefaultControl
+                    appearance="outline">
+      <mat-label>Phone Number</mat-label>
+      <input [formControl]="phoneNumber" matInput required>
+    </mat-form-field>
+    <button mat-raised-button color="accent" (click)="createCall()">CALL</button>
+  </div>
+</ng-container>

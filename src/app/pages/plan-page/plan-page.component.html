@@ -1,0 +1,47 @@
+<ng-container *ngIf="!!_plan; else loader">
+  <div class="plan-container">
+    <a mat-button color="accent" routerLink="/plans" class="back-link">Back</a>
+    <mat-card-header>
+      <div mat-card-avatar class="example-header-image">
+        <img mat-card-image [src]="_plan.images[0]" alt="" />
+      </div>
+      <mat-card-title>{{_plan.name}}</mat-card-title>
+      <mat-card-subtitle>Tariff Plan</mat-card-subtitle>
+    </mat-card-header>
+    <br/>
+    <mat-card-title>Plan includes next services</mat-card-title>
+    <br/>
+    <mat-card-content>
+      <div>
+        <ng-container *ngFor="let service of _plan.services">
+          <mat-card class="plan-service">
+            <mat-card-header>
+              <div mat-card-avatar class="example-header-image">
+                <img mat-card-image [src]="service.icon" alt="" class="service-icon"/>
+              </div>
+              <div class="service-info">
+                <div>
+                  <mat-card-title class="service-title">{{service.name}}</mat-card-title>
+                  <mat-card-subtitle class="service-title">{{service.description}}</mat-card-subtitle>
+                </div>
+                <div>
+                  <mat-card-title class="service-title">{{service.price.value}} $</mat-card-title>
+                  <mat-card-title class="service-title">{{service.value}}</mat-card-title>
+                </div>
+              </div>
+            </mat-card-header>
+          </mat-card>
+        </ng-container>
+        <mat-card-actions [align]="'end'" style="margin-right: 0">
+          <button mat-raised-button color="accent" class="by-plan-button" (click)="_redirectToBuyPlan(_plan.planId)">BUY PLAN</button>
+        </mat-card-actions>
+
+      </div>
+    </mat-card-content>
+  </div>
+
+
+</ng-container>
+
+
+<ng-template #loader><app-loader></app-loader></ng-template>

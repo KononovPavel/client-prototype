@@ -1,0 +1,86 @@
+<ng-container>
+  <div class="chat-container">
+    <mat-card-title class="chat-container__title">Your Messages</mat-card-title>
+    <div class="chat-container-window">
+      <div class="chat-container-left-bar">
+        <form class="chat-container-left-bar-form" [formGroup]="searchForm">
+          <mat-form-field class="chat-container-left-bar-search"
+                          color="accent"
+                          ngDefaultControl
+                          appearance="outline">
+            <mat-label>Phone Number</mat-label>
+            <input formControlName="phoneNumber" matInput required>
+          </mat-form-field>
+          <button class="chat-container-left-bar-form-btn" mat-raised-button color="accent"
+                  (click)="handleSearchField()">search
+          </button>
+        </form>
+        <ng-container *ngIf="!!foundedCustomer && foundedCustomer !== null">
+          <div>
+            <mat-card class="chat-container-left-bar-found-customer">
+              <mat-card-subtitle
+                class="chat-container-left-bar-found-customer-title">{{foundedCustomer?.actualPhoneNumber}}</mat-card-subtitle>
+              <div>
+                <img class="chat-container-left-bar-found-customer-icon" src="assets/images/icons/plus-pink.svg"
+                     (click)="createChat()" alt="" width="20" height="20"/>
+                <img class="chat-container-left-bar-found-customer-icon" src="assets/images/icons/cancel.svg" alt=""
+                     width="20" height="20"/>
+              </div>
+            </mat-card>
+          </div>
+        </ng-container>
+        <ng-container *ngIf="!!chats && chats.length">
+          <div class="chat-container-left-bar-chats">
+            <ng-container *ngFor="let chat of chats">
+              <mat-card class="chat-container-left-bar-chats-chat" (click)="setSelectedChat(chat.chatId)"
+                        [class._selected]="selectedChat == chat.chatId">
+                <ng-container *ngIf="chat?.to?.customerId === customerId">
+                  <mat-card-subtitle>{{chat?.from?.actualPhoneNumber}} {{chat?.from?.customerSensetiveData?.firstName}}</mat-card-subtitle>
+                </ng-container>
+                <ng-container *ngIf="chat?.to?.customerId !== customerId">
+                  <mat-card-subtitle>{{chat?.to?.actualPhoneNumber}} {{chat?.to?.customerSensetiveData?.firstName}}</mat-card-subtitle>
+                </ng-container>
+
+              </mat-card>
+            </ng-container>
+          </div>
+        </ng-container>
+      </div>
+      <ng-container *ngIf="!!chats && chats.length">
+        <div class="chat-container-message-bar">
+          <div class="chat-container-message-bar-messages">
+            <ng-container *ngIf="!!messages && messages.length >= 0">
+              <ng-container *ngFor="let message of messages">
+                <mat-card class="chat-container-message-bar-messages-item"
+                          [class._my-item]="message.customer.customerId === customerId">
+                  <mat-card-subtitle
+                    class="chat-container-message-bar-messages-item-message">{{message.value}}</mat-card-subtitle>
+                  <mat-card-subtitle
+                    class="chat-container-message-bar-messages-item-date">{{message.date | date}}</mat-card-subtitle>
+                </mat-card>
+              </ng-container>
+
+            </ng-container>
+          </div>
+          <div class="chat-container-message-bar-general">
+            <mat-form-field class="chat-container-message-bar-general-input"
+                            color="accent"
+                            ngDefaultControl
+                            appearance="outline">
+              <mat-label>Write your message</mat-label>
+              <input [formControl]="messageControl" matInput required>
+            </mat-form-field>
+            <img class="chat-container-message-bar-general-icon" (click)="sendMessage()"
+                 src="assets/images/icons/send.svg" alt="" width="30" height="30"/>
+          </div>
+        </div>
+      </ng-container>
+    </div>
+
+  </div>
+</ng-container>
+
+
+<ng-container *ngIf="showLoader">
+  <app-loader></app-loader>
+</ng-container>

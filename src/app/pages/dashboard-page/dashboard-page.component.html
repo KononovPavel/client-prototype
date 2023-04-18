@@ -1,0 +1,224 @@
+<ng-container *ngIf="!!_customer; else loader">
+  <div class="dashboard-container">
+    <mat-card-title>
+      DASHBOARD {{_customer?.customerSensetiveData?.firstName?.toUpperCase()}} {{_customer?.customerSensetiveData?.lastName?.toUpperCase()}}</mat-card-title>
+    <ng-container *ngIf="isShowChangePlanVisible">
+      <mat-card class="upgrade-plan">
+        <mat-card-subtitle class="upgrade-plan-text">You can upgrade your plan!</mat-card-subtitle>
+        <a mat-button color="accent" class="upgrade-plan-link" [routerLink]="'/plans'">UPGRAGE PLAN</a>
+      </mat-card>
+    </ng-container>
+    <div class="dashboard-progress">
+      <ng-container *ngIf="!!progressService?.length; else nothingOfServices">
+        <ng-container *ngFor="let service of progressService">
+          <mat-card class="dashboard-progress-spinners">
+            <mat-card-subtitle class="dashboard-progress-spinner-service">{{service.name}}</mat-card-subtitle>
+            <mat-progress-spinner
+              class="dashboard-progress-spinner-top"
+              color="accent"
+              diameter="180"
+              mode="determinate"
+              [value]="((service.actualValue / service.value)*100)">
+            </mat-progress-spinner>
+            <mat-progress-spinner
+              class="dashboard-progress-spinner-bottom"
+              color="primary"
+              diameter="180"
+              mode="determinate"
+              [value]="100">
+            </mat-progress-spinner>
+            <img class="dashboard-progress-spinners-icon" [src]="service?.img" alt="" width="50" height="50"/>
+            <mat-card-subtitle class="dashboard-progress-spinner-service">{{service.actualValue}}
+              from {{service.value}}</mat-card-subtitle>
+          </mat-card>
+        </ng-container>
+      </ng-container>
+      <mat-card *ngIf="!!customerPendingOrders && orderHasPlan" class="plan-is-progress">
+        <img src="assets/images/icons/car.svg" alt="" width="200px" height="200px"/>
+        <mat-card-subtitle>Your new plan is being processed</mat-card-subtitle>
+      </mat-card>
+      <ng-container *ngIf="!!_customer?.actualPlan">
+        <div class="dashboard-customer-info">
+          <mat-card>
+            <mat-card-title>Customer Plan</mat-card-title>
+            <mat-card-header>
+              <mat-card-subtitle class="dashboard-customer-info-plan-title">Plan
+                name: {{_customer.actualPlan.name}}</mat-card-subtitle>
+              <div mat-card-avatar class="example-header-image">
+                <img mat-card-image [src]="_customer.actualPlan.images[0]" alt=""/>
+              </div>
+            </mat-card-header>
+
+            <ng-container *ngFor="let service of _customer?.actualPlan?.services">
+              <div class="dashboard-customer-info-plan-info">
+                <mat-card-subtitle class="dashboard-customer-info-plan-info-value">{{service.name}}: {{service.value}}
+                  price: {{service.price.value}}$
+                </mat-card-subtitle>
+              </div>
+            </ng-container>
+          </mat-card>
+        </div>
+        <div class="dashboard-customer-info">
+          <mat-card class="dashboard-customer-info-phone-number">
+            <mat-card-title>Customer Phone Number</mat-card-title>
+            <mat-card-title
+              class="dashboard-customer-info-phone-number-value">{{_customer.actualPhoneNumber}}</mat-card-title>
+          </mat-card>
+        </div>
+
+      </ng-container>
+    </div>
+
+    <div *ngIf="!!customerPendingOrders?.length" class="dashboard-customer-info">
+      <mat-card class="dashboard-customer-info-orders">
+        <mat-card-title>Orders in progress</mat-card-title>
+        <ng-container *ngFor="let order of customerPendingOrders">
+          <mat-card class="order-container__order">
+            <div class="order-container__order-status" [class._resolved]="order.status === 'RESOLVED'">
+              {{order.status}}
+            </div>
+            <div class="order-container__order-info">
+              <div class="order-container__order-info-who">
+                <mat-card-subtitle class="order-container__order-info-who-text">When
+                  created: {{order.when_created | date}}</mat-card-subtitle>
+                <mat-card-subtitle class="order-container__order-info-who-text">Who
+                  accepted: {{order.who_accept}}</mat-card-subtitle>
+              </div>
+              <div class="order-container__order-info-who">
+                <mat-card-subtitle class="order-container__order-info-who-text">Order Number:
+                  #{{order.orderNumber}}</mat-card-subtitle>
+                <a mat-button color="accent" [routerLink]="'/dashboard/' + order.linkToCustomer"
+                   class="order-container__order-info-who-link">Customer: {{order.linkToCustomer}}</a>
+              </div>
+              <div *ngIf="!!order?.plan">
+                <mat-card-subtitle class="order-container__order-info-who-text">Item: {{order.plan.name}}
+                  / {{order.plan.totalPrice}}$
+                </mat-card-subtitle>
+                <a mat-button color="accent" [routerLink]="'/plan/' + order.plan.planId"
+                   class="order-container__order-info-who-link">Link: {{order.plan.planId}}</a>
+              </div>
+              <div *ngIf="!!order?.product">
+                <mat-card-subtitle class="order-container__order-info-who-text">Item: {{order.product.name}}
+                  / {{order.product.price}}$
+                </mat-card-subtitle>
+                <a mat-button color="accent" [routerLink]="'/product/' + order.product.productId"
+                   class="order-container__order-info-who-link">Product: {{order.product.productId}}</a>
+              </div>
+            </div>
+          </mat-card>
+        </ng-container>
+      </mat-card>
+    </div>
+
+
+    <div class="dashboard-customer-info">
+      <mat-card>
+        <mat-card-title>Customer Information</mat-card-title>
+        <div>
+          <mat-card-subtitle>Email: {{_customer.email}}</mat-card-subtitle>
+        </div>
+        <div class="dashboard-customer-info-sensetive">
+          <mat-card-subtitle class="dashboard-customer-info-sensetive-value">First
+            Name: {{_customer?.customerSensetiveData?.firstName ?? 'Not found'}}</mat-card-subtitle>
+          <mat-card-subtitle class="dashboard-customer-info-sensetive-value">Last
+            Name: {{_customer?.customerSensetiveData?.lastName ?? 'Not found'}}</mat-card-subtitle>
+          <mat-card-subtitle class="dashboard-customer-info-sensetive-value">
+            Patronymic: {{_customer?.customerSensetiveData?.patronymic ?? 'Not found'}}</mat-card-subtitle>
+        </div>
+      </mat-card>
+    </div>
+    <div class="dashboard-customer-info">
+      <mat-card>
+        <mat-card-title>Customer Address Information</mat-card-title>
+        <div class="dashboard-customer-info-address">
+          <mat-card-subtitle class="dashboard-customer-info-address-value">
+            Country: {{_customer?.address?.country ?? 'Not found'}}</mat-card-subtitle>
+          <mat-card-subtitle class="dashboard-customer-info-address-value">
+            City: {{_customer?.address?.city ?? 'Not found'}}</mat-card-subtitle>
+          <mat-card-subtitle class="dashboard-customer-info-address-value">
+            Street: {{_customer?.address?.home ?? 'Not found'}}</mat-card-subtitle>
+          <mat-card-subtitle class="dashboard-customer-info-address-value">
+            Flat: {{_customer?.address?.room ?? 'Not found'}}</mat-card-subtitle>
+        </div>
+      </mat-card>
+    </div>
+    <ng-container *ngIf="customerRole === 'ADMIN'">
+      <div class="dashboard-customer-info">
+        <mat-card>
+          <mat-card-title>Customer Documents Information</mat-card-title>
+          <div class="dashboard-customer-info-address">
+            <mat-card-subtitle class="dashboard-customer-info-address-value">
+              Document Number: {{_customer?.customerDocumentInfo?.documentNumber ?? 'Not found'}}</mat-card-subtitle>
+            <mat-card-subtitle class="dashboard-customer-info-address-value">
+              Document Code: {{_customer?.customerDocumentInfo?.documentCode ?? 'Not found'}}</mat-card-subtitle>
+            <mat-card-subtitle class="dashboard-customer-info-address-value">
+              Identical Code: {{_customer?.customerDocumentInfo?.identicalCode ?? 'Not found'}}</mat-card-subtitle>
+            <mat-card-subtitle class="dashboard-customer-info-address-value">
+              Creation Date: {{(_customer?.customerDocumentInfo?.dateOfCreateDocument |date) ?? 'Not found'}}</mat-card-subtitle>
+            <mat-card-subtitle class="dashboard-customer-info-address-value">
+              Expired Date: {{(_customer?.customerDocumentInfo?.dateOfExpiredDocument | date) ?? 'Not found'}}</mat-card-subtitle>
+          </div>
+        </mat-card>
+      </div>
+    </ng-container>
+    <div class="dashboard-customer-info">
+      <mat-card>
+        <mat-card-title>Customer Uploaded Documents</mat-card-title>
+        <div class="dashboard-customer-info-documents">
+          <ng-container *ngIf="_customer?.documents?.length; else nothingOfDocuments">
+            <ng-container *ngFor="let document of _customer.documents">
+              <img [src]="'http://localhost:3000/' + document" alt="" width="200px" height="200px"/>
+            </ng-container>
+          </ng-container>
+        </div>
+      </mat-card>
+    </div>
+    <div class="dashboard-customer-info">
+      <mat-card>
+        <mat-card-title>Customer Products</mat-card-title>
+        <div class="dashboard-customer-info-products">
+          <ng-container *ngIf="_customer?.items?.length; else nothingOfProducts">
+            <ng-container *ngFor="let product of _customer.items">
+              <mat-card class="dashboard-customer-info-products-product">
+                <img class="dashboard-customer-info-products-product-img"
+                     [src]="'http://localhost:3000/' + product?.images?.[0]" alt=""/>
+                <a mat-button color="accent" [routerLink]="'/product/' + product.productId">{{product.name}}</a>
+              </mat-card>
+            </ng-container>
+          </ng-container>
+        </div>
+      </mat-card>
+    </div>
+  </div>
+</ng-container>
+
+
+<ng-template #loader>
+  <app-loader></app-loader>
+</ng-template>
+
+<ng-template #nothingOfServices>
+  <ng-container *ngIf="!customerPendingOrders || !orderHasPlan">
+    <mat-card class="no-plan">
+      <img src="assets/images/icons/not-search.svg" alt="" width="200px" height="200px"/>
+      <mat-card-subtitle>You haven't Plan</mat-card-subtitle>
+      <a mat-button color="accent" [routerLink]="'/plans'">BY PLAN</a>
+    </mat-card>
+  </ng-container>
+</ng-template>
+
+<ng-template #nothingOfDocuments>
+  <mat-card class="no-plan">
+    <img src="assets/images/icons/no-documents.svg" alt="" width="200px" height="200px"/>
+    <mat-card-subtitle>You dont uploaded documents</mat-card-subtitle>
+  </mat-card>
+</ng-template>
+
+<ng-template #nothingOfProducts>
+  <mat-card class="no-plan">
+    <img src="assets/images/icons/no-products.svg" alt="" width="200px" height="200px"/>
+    <mat-card-subtitle>You dont buy any product</mat-card-subtitle>
+    <a mat-button color="accent" [routerLink]="'/shop'">BACK TO SHOP</a>
+  </mat-card>
+</ng-template>
+

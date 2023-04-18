@@ -1,0 +1,45 @@
+<ng-container *ngIf="!!product">
+  <div class="product-container">
+    <a mat-button color="accent" class="back-link" (click)="backToShop()">Back To Shop</a>
+    <mat-card class="product-container__product">
+      <mat-card-title class="product-container-title">{{product.name}}</mat-card-title>
+
+      <div class="product-container__product-item">
+        <div class="product-container__product-item-images">
+          <ng-container *ngIf="product.images && product.images.length">
+            <div class="product-container__product-item-images-left">
+              <ng-container *ngFor="let image of product.images">
+                <div class="product-container__product-item-images-left-item" (click)="changeSeletedImage(image)">
+                  <img class="product-container__product-item-images-left-item-img" [class._selected]="image == selectedImage" [src]="'http://localhost:3000/' + image" alt="" />
+                </div>
+              </ng-container>
+            </div>
+            <div class="product-container__product-item-images-main">
+              <img [src]="'http://localhost:3000/' + selectedImage" alt=""
+                   class="product-container__product-item-images-main-img"/>
+            </div>
+          </ng-container>
+        </div>
+
+        <div class="product-container__product-item-info">
+          <mat-card-subtitle>
+            Description
+          </mat-card-subtitle>
+            <mat-card-subtitle class="product-container__product-item-info-description">
+              {{product.description}}
+            </mat-card-subtitle>
+          <mat-card-subtitle class="product-container__product-item-info-description">Category: {{product.category}}</mat-card-subtitle>
+          <mat-card-subtitle class="product-container__product-item-info-price">Price: {{product.price}}$</mat-card-subtitle>
+        </div>
+      </div>
+
+      <button class="product-container__product-btn" mat-raised-button color="accent"
+              (click)="byProduct(product.productId)">Buy {{product.name}}</button>
+    </mat-card>
+  </div>
+</ng-container>
+
+
+<ng-container *ngIf="isShowLoader">
+  <app-loader></app-loader>
+</ng-container>

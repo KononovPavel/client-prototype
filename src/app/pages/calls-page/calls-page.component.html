@@ -1,0 +1,34 @@
+<ng-container>
+  <div class="calls-container">
+    <mat-card-title class="calls-container-title">Calls</mat-card-title>
+    <ng-container *ngIf="calls && calls.length > 0; else nothingOfCalls">
+      <ng-container *ngFor="let call of calls">
+        <mat-card class="calls-container-item">
+          <ng-container *ngIf="call?.from?.customerId === customerId">
+            <img src='/assets/images/icons/phone-outgoing.svg' alt="" width="50" height="50">
+            <mat-card-subtitle class="calls-container-item-phone">+{{call?.to?.actualPhoneNumber}}</mat-card-subtitle>
+            <mat-card-subtitle class="calls-container-item-time">duration {{call.time}}</mat-card-subtitle>
+          </ng-container>
+          <ng-container *ngIf="call?.to?.customerId === customerId">
+            <img src='/assets/images/icons/phone-incoming.svg' alt="" width="50" height="50">
+            <mat-card-subtitle class="calls-container-item-phone">+{{call?.from?.actualPhoneNumber}}</mat-card-subtitle>
+            <mat-card-subtitle class="calls-container-item-time"> duration {{call.time}}</mat-card-subtitle>
+          </ng-container>
+        </mat-card>
+      </ng-container>
+    </ng-container>
+  </div>
+</ng-container>
+
+
+<ng-container *ngIf="showLoader">
+  <app-loader></app-loader>
+</ng-container>
+
+
+<ng-template #nothingOfCalls>
+  <div class="no-items">
+    <img src="assets/images/icons/no-call.svg" alt="" class="no-items-icon"/>
+    <mat-card-subtitle class="order-container__order-info-who-text">Not founded calls</mat-card-subtitle>
+  </div>
+</ng-template>

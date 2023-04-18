@@ -1,0 +1,59 @@
+<ng-container>
+
+  <div class="right-bar-container">
+    <div class="right-bar__links">
+      <h3>NAVIGATION</h3>
+      <a class="right-bar__links-link"
+         (click)="toogleLeftBar.emit()"
+         color="accent"
+         mat-button [routerLink]="'/dashboard/' + customerLink()">Dashoard</a>
+      <a class="right-bar__links-link"
+         color="accent"
+         (click)="toogleLeftBar.emit()"
+         mat-button routerLink="/plans">Plans</a>
+      <a
+        class="right-bar__links-link"
+        (click)="toogleLeftBar.emit()"
+        color="accent"
+        mat-button [routerLink]="'/shop'">Shop</a>
+      <a class="right-bar__links-link"
+         color="accent"
+         (click)="toogleLeftBar.emit();"
+         mat-button routerLink="/my-orders">Orders</a>
+      <a class="right-bar__links-link"
+         color="accent"
+         (click)="toogleLeftBar.emit()"
+         mat-button routerLink="/support">Support</a>
+      <a *ngIf="_customerRole === 'ADMIN'"
+         class="right-bar__links-link"
+         color="accent"
+         (click)="toogleLeftBar.emit()"
+         mat-button routerLink="/admin">Admin</a>
+      <a *ngIf="_customerRole === 'Customer'"
+         class="right-bar__links-link"
+         color="accent"
+         (click)="toogleLeftBar.emit()"
+         mat-button routerLink="/notifications">Notifications</a>
+      <a class="right-bar__links-link"
+         color="accent"
+         (click)="toogleLeftBar.emit()"
+         mat-button routerLink="/chat">Messages</a>
+      <a class="right-bar__links-link"
+         color="accent"
+         (click)="toogleLeftBar.emit()"
+         mat-button routerLink="/calls">Calls</a>
+    </div>
+
+    <div class="right-bar-container__buttons">
+      <button *ngIf="!isCustomerLogin"
+              (click)="login()"
+              class="right-bar-container__buttons-btn"
+              mat-raised-button color="accent">LOGIN</button>
+      <button *ngIf="isCustomerLogin"
+              class="right-bar-container__buttons-btn"
+              (click)="_logout()"
+              mat-raised-button color="accent">LOGOUT</button>
+    </div>
+  </div>
+
+</ng-container>

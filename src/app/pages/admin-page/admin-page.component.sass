@@ -1,0 +1,129 @@
+.admin-container
+  padding: 16px 16px
+  margin: 0 auto
+  @media (max-width: 1200px)
+    padding: 0
+  width: 80%
+
+  &-tabs
+    display: flex
+    justify-content: space-between !important
+    width: 100%
+
+.mat-tab-labels
+  justify-content: space-between !important
+  display: flex
+
+.no-search
+  width: 100%
+  display: flex
+  align-items: center
+  flex-direction: column
+
+.admin
+
+  &-products-list-products
+    width: 100%
+    display: flex
+    flex-wrap: wrap
+
+    @media (max-width: 800px)
+      justify-content: center
+
+    &-product
+      display: flex
+      flex-direction: column
+      align-items: center
+      margin: 8px 8px
+      max-width: 200px
+
+      &-link
+        white-space: normal
+        line-height: normal
+        margin-top: 4px
+
+      &-image
+        max-height: 200px !important
+
+
+  &-customers
+    width: 100%
+    &-list
+      margin-top: 16px
+
+      &-item
+        margin-top: 16px
+
+        &-link
+          padding: 0 !important
+
+      &-item:first-child
+        margin-top: 24px
+
+
+
+    &-create
+      position: relative
+      float: right
+
+.order-container
+  padding: 16px 16px
+  margin: 0 auto
+  @media (max-width: 1200px)
+    padding: 0
+  width: 80%
+
+  &__title
+    margin-top: 16px
+
+  &__order
+    width: 100%
+    height: 100%
+    display: flex !important
+    margin-bottom: 16px
+
+
+    &-status
+      background: #f2f2f2
+      border-radius: 4px
+      padding: 4px
+      max-width: 90px
+      text-align: center
+      margin-right: 16px
+      height: 100%
+
+      &._resolved
+        background: #00e873
+
+
+    &-info
+      display: flex
+      width: 100%
+      height: 100%
+      flex-wrap: wrap
+      flex-direction: column
+
+      &-who
+        display: flex
+        flex-wrap: wrap
+
+        &-text
+          margin-top: 0 !important
+          margin-right: 16px
+
+        &-link
+          margin-top: 0 !important
+          margin-right: 16px
+          line-height: normal
+          text-decoration: underline
+          padding-left: 0
+          @media (max-width: 800px)
+            white-space: normal
+            margin-right: 0
+            padding-left: 0
+
+
+        &-link:hover
+          background: none
+.button-accept
+  margin-top: 16px
