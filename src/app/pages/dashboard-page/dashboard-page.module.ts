@@ -9,13 +9,16 @@ import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 import {MatButtonModule} from "@angular/material/button";
 import {RouterLinkWithHref} from "@angular/router";
 import {OrderService} from "../../services/order.service";
+import {MatFormFieldModule} from "@angular/material/form-field";
+import {ReactiveFormsModule} from "@angular/forms";
+import {MatInputModule} from "@angular/material/input";
 
 
 const declarations = [DashboardPageComponent]
 
 @NgModule({
   declarations,
-  imports: [CommonModule, LoaderModule, MatCardModule, MatProgressSpinnerModule,DatePipe, MatButtonModule, RouterLinkWithHref],
+  imports: [CommonModule, LoaderModule, MatCardModule, MatProgressSpinnerModule, DatePipe, MatButtonModule, RouterLinkWithHref, MatFormFieldModule, ReactiveFormsModule, MatInputModule],
   providers:[LoaderService, CustomerService,
     OrderService]
 })

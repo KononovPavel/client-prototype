@@ -48,6 +48,10 @@ import {CallPopupModule} from "./components/call-popup/call-popup.module";
 import { SignalToCallPopupComponent } from './components/signal-to-call-popup/signal-to-call-popup.component';
 import {SignalToCallPopupModule} from "./components/signal-to-call-popup/signal-to-call-popup.module";
 import { SocketIoConfig, SocketIoModule } from 'ngx-socket-io';
+import { ImagePopupComponent } from './components/image-popup/image-popup.component';
+import {ImagePopupModule} from "./components/image-popup/image-popup.module";
+import { CreateNotificationPopupComponent } from './components/create-notification-popup/create-notification-popup.component';
+import {CreateNotificationPopupModule} from "./components/create-notification-popup/create-notification-popup.module";
 
 
 
@@ -106,7 +110,9 @@ const routes: Routes = [
     CreateCallPopupModule,
     CallPopupModule,
     SignalToCallPopupModule,
-    SocketIoModule.forRoot(config)
+    SocketIoModule.forRoot(config),
+    ImagePopupModule,
+    CreateNotificationPopupModule
   ],
   providers: [AuthGuard, HttpClient, LoaderService],
   bootstrap: [AppComponent]

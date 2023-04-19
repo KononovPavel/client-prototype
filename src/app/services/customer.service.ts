@@ -47,6 +47,10 @@ export class CustomerService {
     return this.http.put<string>(APIEnum.NOTIFICATIONS + '/' + customerId, {}).pipe()
   }
 
+  public getAllNotes(): Observable<NoteModel[]> {
+    return this.http.get<NoteModel[]>(APIEnum.NOTIFICATIONS).pipe()
+  }
+
   public getCustomerByPhoneNumber(phoneNumber: string): Observable<CustomerModel | null> {
     return this.http.post<CustomerModel | null>(APIEnum.CUSTOMER_PHONE_NUMBER + '/' + phoneNumber, {}).pipe()
   }

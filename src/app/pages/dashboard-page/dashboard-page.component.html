@@ -114,32 +114,87 @@
     <div class="dashboard-customer-info">
       <mat-card>
         <mat-card-title>Customer Information</mat-card-title>
-        <div>
-          <mat-card-subtitle>Email: {{_customer.email}}</mat-card-subtitle>
-        </div>
-        <div class="dashboard-customer-info-sensetive">
-          <mat-card-subtitle class="dashboard-customer-info-sensetive-value">First
-            Name: {{_customer?.customerSensetiveData?.firstName ?? 'Not found'}}</mat-card-subtitle>
-          <mat-card-subtitle class="dashboard-customer-info-sensetive-value">Last
-            Name: {{_customer?.customerSensetiveData?.lastName ?? 'Not found'}}</mat-card-subtitle>
-          <mat-card-subtitle class="dashboard-customer-info-sensetive-value">
-            Patronymic: {{_customer?.customerSensetiveData?.patronymic ?? 'Not found'}}</mat-card-subtitle>
-        </div>
+        <form [formGroup]="sensetiveDataFormGroup">
+          <mat-form-field class="sensetive-data-input"
+                          color="accent"
+                          ngDefaultControl
+                          appearance="outline">
+            <mat-label>First Name</mat-label>
+            <input formControlName="firstName" matInput required>
+            <mat-error *ngIf="hasError('firstName', 'required', sensetiveDataFormGroup)">Field is required
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field class="sensetive-data-input"
+                          color="accent"
+                          ngDefaultControl
+                          appearance="outline">
+            <mat-label>Last Name</mat-label>
+            <input formControlName="lastName" matInput required>
+            <mat-error *ngIf="hasError('lastName', 'required', sensetiveDataFormGroup)">Field is required
+            </mat-error>
+
+          </mat-form-field>
+          <mat-form-field class="sensetive-data-input"
+                          color="accent"
+                          ngDefaultControl
+                          appearance="outline">
+            <mat-label>Patronymic</mat-label>
+            <input formControlName="patronymic" matInput>
+          </mat-form-field>
+        </form>
+        <mat-card-actions [align]="'end'">
+          <button  mat-raised-button color="accent" class="save-btn"
+                  (click)="saveCustomerSensetiveData()">SAVE INFORMATION
+          </button>
+        </mat-card-actions>
       </mat-card>
     </div>
     <div class="dashboard-customer-info">
       <mat-card>
         <mat-card-title>Customer Address Information</mat-card-title>
-        <div class="dashboard-customer-info-address">
-          <mat-card-subtitle class="dashboard-customer-info-address-value">
-            Country: {{_customer?.address?.country ?? 'Not found'}}</mat-card-subtitle>
-          <mat-card-subtitle class="dashboard-customer-info-address-value">
-            City: {{_customer?.address?.city ?? 'Not found'}}</mat-card-subtitle>
-          <mat-card-subtitle class="dashboard-customer-info-address-value">
-            Street: {{_customer?.address?.home ?? 'Not found'}}</mat-card-subtitle>
-          <mat-card-subtitle class="dashboard-customer-info-address-value">
-            Flat: {{_customer?.address?.room ?? 'Not found'}}</mat-card-subtitle>
-        </div>
+        <form [formGroup]="addressFormGroup">
+          <mat-form-field class="sensetive-data-input"
+                          color="accent"
+                          ngDefaultControl
+                          appearance="outline">
+            <mat-label>Country</mat-label>
+            <input formControlName="country" matInput placeholder="Country" required>
+            <mat-error *ngIf="hasError('country', 'required', addressFormGroup)">Field is required</mat-error>
+          </mat-form-field>
+
+          <mat-form-field class="sensetive-data-input"
+                          color="accent"
+                          ngDefaultControl
+                          appearance="outline">
+            <mat-label>City</mat-label>
+            <input formControlName="city" matInput required>
+            <mat-error *ngIf="hasError('city', 'required', addressFormGroup)">Field is required</mat-error>
+
+          </mat-form-field>
+          <mat-form-field class="sensetive-data-input"
+                          color="accent"
+                          ngDefaultControl
+                          appearance="outline">
+            <mat-label>Street</mat-label>
+            <input formControlName="home" matInput required>
+            <mat-error *ngIf="hasError('home', 'required', addressFormGroup)">Field is required</mat-error>
+          </mat-form-field>
+
+          <mat-form-field class="sensetive-data-input"
+                          color="accent"
+                          ngDefaultControl
+                          appearance="outline">
+            <mat-label>Home</mat-label>
+            <input formControlName="room" matInput required>
+            <mat-error *ngIf="hasError('room', 'required', addressFormGroup)">Field is required</mat-error>
+          </mat-form-field>
+        </form>
+        <mat-card-actions [align]="'end'">
+          <button mat-raised-button color="accent" class="save-btn" (click)="saveCustomerAddress()">
+            SAVE INFORMATION
+          </button>
+        </mat-card-actions>
       </mat-card>
     </div>
     <ng-container *ngIf="customerRole === 'ADMIN'">
@@ -167,10 +222,22 @@
         <div class="dashboard-customer-info-documents">
           <ng-container *ngIf="_customer?.documents?.length; else nothingOfDocuments">
             <ng-container *ngFor="let document of _customer.documents">
-              <img [src]="'http://localhost:3000/' + document" alt="" width="200px" height="200px"/>
+              <img (click)="openFullImage(document)" class="document-image" [src]="'http://localhost:3000/' + document" alt="" width="200px" height="200px"/>
             </ng-container>
           </ng-container>
         </div>
+
+        <mat-card-actions style="display: flex; flex-wrap: wrap" [align]="'end'">
+          <label class="input-file">
+            <input type="file" multiple #files placeholder="Upload your files"
+                   (change)="handleFileInputChange($event)">
+            <span class="input-file-btn">Upload document photo</span>
+            <span *ngIf="customerFiles?.length" class="input-file-text">used {{customerFiles?.length}}</span>
+          </label>
+          <button mat-raised-button color="accent" class="save-btn" (click)="uploadCustomerDocuments()">
+            Upload Documents
+          </button>
+        </mat-card-actions>
       </mat-card>
     </div>
     <div class="dashboard-customer-info">

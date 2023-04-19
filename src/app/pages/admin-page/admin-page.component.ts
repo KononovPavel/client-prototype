@@ -14,6 +14,10 @@ import {LoaderService} from "../../services/loader.service";
 import {ProductModel} from "../../models/product.model";
 import {ProductService} from "../../services/product.service";
 import {CreateNewProductComponent} from "../../components/create-new-product/create-new-product.component";
+import {NoteModel} from "../../models/note.model";
+import {
+  CreateNotificationPopupComponent
+} from "../../components/create-notification-popup/create-notification-popup.component";
 
 @Component({
   selector: 'app-admin-page',
@@ -40,6 +44,8 @@ export class AdminPageComponent implements OnInit {
   orders: OrderModel[];
 
   products: ProductModel[];
+
+  notifications: NoteModel[]
 
   isShowLoader: boolean = false;
 
@@ -72,12 +78,13 @@ export class AdminPageComponent implements OnInit {
 
   private findData() {
     this.isShowLoader = true;
-    forkJoin([this.customerService.getAllCustomers(), this.orderService.getAllOrders(), this.planService.getAllPlanes(), this.productService.getAllProducts()]).pipe(
-      tap(([customers,orders, planes, products]:[CustomerModel[],OrderModel[], PlanModel[], ProductModel[]])=> {
+    forkJoin([this.customerService.getAllCustomers(), this.orderService.getAllOrders(), this.planService.getAllPlanes(), this.productService.getAllProducts(), this.customerService.getAllNotes()]).pipe(
+      tap(([customers,orders, planes, products, notes]:[CustomerModel[],OrderModel[], PlanModel[], ProductModel[], NoteModel[]])=> {
         this.customers = customers;
         this.orders = orders.filter((order:OrderModel) => order.status === "PENDING");
         this.plans = planes;
         this.products = products;
+        this.notifications = notes;
         this.isShowLoader = false;
       }),
       takeUntil(this.destroy$)
@@ -87,5 +94,9 @@ export class AdminPageComponent implements OnInit {
 
   createProduct() {
     const dialogRef = this.dialog.open(CreateNewProductComponent);
+  }
+
+  createNotification() {
+      const dialogRef = this.dialog.open(CreateNotificationPopupComponent);
   }
 }

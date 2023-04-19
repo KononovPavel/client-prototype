@@ -103,7 +103,34 @@
           </ng-container>
         </div>
       </mat-tab>
-      <mat-tab label="Plans">Content 3</mat-tab>
+      <mat-tab label="Notifications">
+        <div class="admin-customers">
+          <button class="admin-customers-create" mat-button color="accent" (click)="createNotification()">
+            <img src="assets/images/icons/plus-pink.svg" width="15" height="15"/>
+            Create new Notification
+          </button>
+
+          <ng-container *ngIf="notifications && notifications.length; else noItems">
+            <div class="note-container">
+              <mat-card-title class="note-container__title">Notifications</mat-card-title>
+              <ng-container *ngFor="let note of notifications">
+                <mat-card class="note-container-item">
+                  <div>
+                    <mat-card-subtitle>{{note.subject}}</mat-card-subtitle>
+                    <mat-card-title class="note-container-item-title">{{note.description}}</mat-card-title>
+                  </div>
+                  <div>
+                    <img *ngIf="!note.isReadable" src="assets/images/icons/exclamation-mark.svg" alt="" width="50" height="50" />
+                    <img *ngIf="note.isReadable" src="assets/images/icons/checked.svg" alt="" width="50" height="50" />
+                  </div>
+                </mat-card>
+              </ng-container>
+            </div>
+          </ng-container>
+
+
+        </div>
+      </mat-tab>
     </mat-tab-group>
   </div>
 </ng-container>
@@ -132,4 +159,11 @@
     <img src="assets/images/icons/no-products.svg" width="200" height="200"/>
     <mat-card-subtitle>Orders Not Found</mat-card-subtitle>
   </mat-card>
+</ng-template>
+
+<ng-template #noItems>
+  <div class="no-items">
+    <img src="assets/images/icons/notification-not.svg" alt="" class="no-items-icon"/>
+    <mat-card-subtitle class="order-container__order-info-who-text">Not founded notifications</mat-card-subtitle>
+  </div>
 </ng-template>

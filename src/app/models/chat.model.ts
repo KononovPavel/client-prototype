@@ -9,8 +9,6 @@ export interface ChatModel {
   to: CustomerModel
 }
 
-
-
 export interface MessageModel {
   messageId: string
   value: string

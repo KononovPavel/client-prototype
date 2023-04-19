@@ -10,14 +10,9 @@ export interface ServiceModel {
 }
 
 export interface PlanModel {
-
   planId: string;
-
   name: string;
-
   images: string[];
-
   services: ServiceModel[];
-
   totalPrice: number;
 }
