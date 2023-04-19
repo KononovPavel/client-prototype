@@ -1,0 +1,21 @@
+<ng-container>
+  <h1 mat-dialog-title>Create Notification</h1>
+  <div mat-dialog-content class="create-note">
+    <mat-form-field class="create-note-field"
+                    color="accent"
+                    ngDefaultControl
+                    appearance="outline">
+      <mat-label>Subject</mat-label>
+      <input [formControl]="subject" matInput required>
+    </mat-form-field>
+
+    <mat-form-field class="create-note-field"
+                    color="accent"
+                    ngDefaultControl
+                    appearance="outline">
+      <mat-label>Description</mat-label>
+      <textarea [formControl]="description" matInput required></textarea>
+    </mat-form-field>
+    <button mat-raised-button color="accent" (click)="createNewNote()">CREATE</button>
+  </div>
+</ng-container>
